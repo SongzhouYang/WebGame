@@ -8,6 +8,7 @@ WebGame.Game = function (game) {
   this.enemies = null;
   this.enemy = null;
   this.player = null;
+  this.emitter = null;
 };
 
 WebGame.Game.prototype = {
@@ -24,10 +25,20 @@ WebGame.Game.prototype = {
     this.createMusic();
     this.createMap();
     this.createEnemies();
+    this.createEmitter();
 
     this.camera.focusOnXY(7 * 64, this.world.centerY / 2);
     // this.a = this.add.image(this.world.centerX, this.world.centerY, 'atlasss', 1);
     // this.a.anchor.setTo(0.5);
+  },
+
+  createEmitter: function () {
+    this.emitter = this.add.emitter(this.world.centerX, this.world.centerY, 400);
+    this.emitter.makeParticles(['player']);
+    this.emitter.gravity = 100;
+    this.emitter.setAlpha(0.1, 1, 3000);
+    this.emitter.setScale(0.1, 2, 0.1, 2);
+    this.emitter.start(false, 5000, 50);
   },
 
   createEnemies: function () {
@@ -86,6 +97,11 @@ WebGame.Game.prototype = {
   },
 
   update: function () {
+    this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+    this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+    this.emitter.emitX = this.player.x;
+    this.emitter.emitY = this.player.y + 50;
+
     this.camera.focusOnXY(this.player.x + 4 * 64, this.player.y);
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemy, this.resetGame, null, this);
