@@ -163,7 +163,7 @@ WebGame.Game.prototype = {
       this.winSound.play();
       this.player.body.velocity.x = -0.2;
       this.isOver = true;
-      this.time.events.add(Phaser.Timer.SECOND * 1.5, this.gameOver, this);
+      this.time.events.add(Phaser.Timer.SECOND * 1.5, this.stageClear, this);
     }
   },
 
@@ -172,6 +172,6 @@ WebGame.Game.prototype = {
   },
 
   stageClear: function () {
-    this.state.start('Gameover');
+    this.state.start('GameWin');
   }
 };

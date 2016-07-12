@@ -6,6 +6,7 @@ window.onload = function () {
   game.state.add('StartMenu', WebGame.StartMenu);
   game.state.add('Game', WebGame.Game);
   game.state.add('GameOver', WebGame.GameOver);
+  game.state.add('GameWin', WebGame.GameWin);
 
   game.state.start('Boot');
 };
