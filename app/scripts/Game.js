@@ -80,9 +80,9 @@ WebGame.Game.prototype = {
   },
 
   createScore: function () {
-    var style = {font: "32px Arial", fill: "#FFFFFF, wordWrap: true"};
+    var style = {font: '32px Arial', fill: '#FFFFFF, wordWrap: true'};
 
-    this.text = this.add.text(100, 100, "Score", style);
+    this.text = this.add.text(100, 100, 'Score', style);
     this.physics.arcade.enable(this.text);
     this.text.FixedToCamera = true;
   },

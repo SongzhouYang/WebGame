@@ -22,7 +22,7 @@ WebGame.Boot.prototype = {
     this.stage.forcePortrait = true;
 
     this.input.addPointer();
-    this.stage.backgroundColor = "#66ccff";
+    this.stage.backgroundColor = '#66ccff';
 
     this.state.start('Preloader');
   }
