@@ -31,11 +31,11 @@ WebGame.Game.prototype = {
 
     this.createMap();
     this.createScore();
-    this.createMusic();
     this.createEnemies();
-    this.createEmitter();
     this.createCoins();
     this.createPlayer();
+    this.createEmitter();
+    this.createMusic();
 
     // this.a = this.add.image(this.world.centerX, this.world.centerY, 'atlasss', 1);
     // this.a.anchor.setTo(0.5);
@@ -63,14 +63,31 @@ WebGame.Game.prototype = {
   createMap: function () {
     this.map = this.add.tilemap('gamemap');
     this.map.addTilesetImage('tiles_spritesheet', 'tiles_spritesheet');
-    this.map.setCollisionBetween(55, 57);
-    this.map.setCollisionBetween(104, 160);
+    this.map.setCollisionByIndex(104);
+    this.map.setCollisionByIndex(153);
+    this.map.setCollisionByIndex(69);
+    this.map.setCollisionByIndex(57);
+    this.map.setCollisionByIndex(45);
+    this.map.setCollisionByIndex(81);
+    this.map.setCollisionByIndex(66);
+    this.map.setCollisionByIndex(54);
+    this.map.setCollisionByIndex(42);
+    this.map.setCollisionByIndex(101);
+    this.map.setCollisionByIndex(153);
+    this.map.setCollisionByIndex(36);
+    this.map.setCollisionByIndex(56);
+    this.map.setCollisionByIndex(130);
+    this.map.setCollisionByIndex(60);
+    this.map.setCollisionByIndex(129);
+    this.map.setCollisionByIndex(133);
+
     this.layer = this.map.createLayer(0);
     this.layer.resizeWorld();
     this.physics.arcade.enable(this.layer);
 
-    // this.map.setTileIndexCallback(43, this.lose, this);
     this.map.setTileIndexCallback(70, this.win, this);
+    this.map.setTileIndexCallback(44, this.lose, this);
+    this.map.setTileIndexCallback(8, this.lose, this);
     this.map.setTileIndexCallback(82, this.win, this);
   },
 
@@ -91,7 +108,7 @@ WebGame.Game.prototype = {
   },
 
   createPlayer: function () {
-    this.player = this.add.sprite(2 * 64, this.world.centerY / 2, 'player');
+    this.player = this.add.sprite(2 * 64, this.world.centerY * 3 / 4, 'player');
     this.player.animations.add('walk', [6, 7, 8, 9, 10], 5, true);
     this.player.animations.add('jump', [15], 5, true);
     this.player.animations.add('die', [14], 5, true);
