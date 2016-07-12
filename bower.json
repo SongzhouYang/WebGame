@@ -4,5 +4,9 @@
   "dependencies": {
     "jquery": "~2.1.1",
     "phaser": "^2.6.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3",
+    "chai": "^3.5.0"
   }
 }
