@@ -17,6 +17,9 @@ WebGame.Preloader.prototype = {
     this.load.tilemap('gamemap', 'images/gamemap.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles_spritesheet', 'images/tileset/tiles_spritesheet.png');
     this.load.audio('music', 'images/BaseAfterBase.mp3');
+    this.load.audio('getCoin', 'sound/getCoin.ogg');
+    this.load.audio('win', 'sound/win.ogg');
+    this.load.audio('lose', 'sound/lose.mp3');
     this.load.image('enemy', 'images/slimeWalk1.png');
     this.load.image('gameOver', 'images/gameover.png');
     this.load.image('tryAgain', 'images/tryagain.png');

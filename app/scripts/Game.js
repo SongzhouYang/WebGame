@@ -9,12 +9,15 @@ WebGame.Game = function (game) {
   this.enemy = null;
   this.player = null;
   this.emitter = null;
-  this.coins = null;
+  this.coinSound = null;
+  this.winSound = null;
+  this.coins = [];
 };
 
 WebGame.Game.prototype = {
   preload: function () {
-
+    this.coins = [];
+    this.spacePressed = false;
   },
 
   create: function () {
@@ -42,9 +45,7 @@ WebGame.Game.prototype = {
   },
 
   createCoins: function () {
-    this.coins = this.add.physicsGroup(Phaser.Physics.ARCADE);
-    var c = this.add.sprite(28 * 70 + 10, 6 * 70, 'coin');
-    this.coins.add(c);
+    this.coins.push(this.add.sprite(28 * 70 + 10, 6 * 70, 'coin'));
   },
 
   createEnemies: function () {
@@ -57,20 +58,25 @@ WebGame.Game.prototype = {
   createMap: function () {
     this.map = this.add.tilemap('gamemap');
     this.map.addTilesetImage('tiles_spritesheet', 'tiles_spritesheet');
-    this.map.setCollisionBetween(50, 90);
+    this.map.setCollisionBetween(55, 57);
     this.map.setCollisionBetween(104, 160);
     this.layer = this.map.createLayer(0);
     this.layer.resizeWorld();
     this.physics.arcade.enable(this.layer);
 
-    this.map.setTileIndexCallback(43, this.resetGame, this);
-    this.map.setTileIndexCallback(69, this.resetGame, this);
-    this.map.setTileIndexCallback(81, this.resetGame, this);
+    // this.map.setTileIndexCallback(43, this.resetGame, this);
+    this.map.setTileIndexCallback(70, this.win, this);
+    this.map.setTileIndexCallback(82, this.win, this);
   },
 
   createMusic: function () {
     this.music = this.add.audio('music');
     this.music.play();
+    this.coinSound = this.add.audio('getCoin');
+    this.winSound = this.add.audio('win');
+    this.winSound.onMute.add(function() {
+      this.state.start('StartMenu');
+    });
   },
 
   createScore: function () {
@@ -103,13 +109,21 @@ WebGame.Game.prototype = {
   },
 
   getCoin: function (player, coin) {
+    this.coinSound.play();
     coin.kill();
   },
 
   update: function () {
-    this.camera.focusOnXY(this.player.x + 4 * 64, this.player.y);
+    this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+    this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+    this.emitter.emitX = this.player.x;
+    this.emitter.emitY = this.player.y + 50;
+
+    this.camera.focusOnXY(this.player.x + 3 * 64, this.player.y);
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemy, this.resetGame, null, this);
+    this.physics.arcade.overlap(this.player, this.coins, this.getCoin, null, this);
+
     if (this.spacePressed === true) this.jump();
     if (this.player.body.velocity.y === 0) {
       this.player.animations.play('walk', 10, false, false);
@@ -127,5 +141,11 @@ WebGame.Game.prototype = {
   resetGame: function () {
     this.music.stop();
     this.state.start('GameOver');
+  },
+
+  win: function () {
+    this.music.stop();
+    this.winSound.play();
+    this.player.body.velocity.x = 0;
   }
 };
