@@ -33,12 +33,11 @@ WebGame.Game.prototype = {
   },
 
   createEmitter: function () {
-    this.emitter = this.add.emitter(this.world.centerX, this.world.centerY, 400);
+    this.emitter = this.add.emitter(this.world.centerX, this.world.centerY, 5);
     this.emitter.makeParticles(['player']);
     this.emitter.gravity = 100;
-    this.emitter.setAlpha(0.1, 1, 3000);
-    this.emitter.setScale(0.1, 2, 0.1, 2);
-    this.emitter.start(false, 5000, 50);
+    this.emitter.setAlpha(0.3, 1, 5000);
+    this.emitter.start(false, 80, 10);
   },
 
   createEnemies: function () {
@@ -97,11 +96,6 @@ WebGame.Game.prototype = {
   },
 
   update: function () {
-    this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
-    this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
-    this.emitter.emitX = this.player.x;
-    this.emitter.emitY = this.player.y + 50;
-
     this.camera.focusOnXY(this.player.x + 4 * 64, this.player.y);
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemy, this.resetGame, null, this);
@@ -112,6 +106,10 @@ WebGame.Game.prototype = {
       this.player.animations.play('jump', 10, false, false);
     }
     if (this.player.body.velocity.x === 0) this.resetGame();
+    this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+    this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+    this.emitter.emitX = this.player.x;
+    this.emitter.emitY = this.player.y + 50;
   },
 
   resetGame: function () {
