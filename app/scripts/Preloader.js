@@ -18,6 +18,7 @@ WebGame.Preloader.prototype = {
     this.load.image('tiles_spritesheet', 'images/tileset/tiles_spritesheet.png');
     this.load.audio('music', 'images/BaseAfterBase.mp3');
     this.load.image('enemy', 'images/slimeWalk1.png');
+    this.load.image('restart', 'images/restart.png')
   },
 
   create: function () {

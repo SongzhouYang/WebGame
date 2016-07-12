@@ -1,15 +1,15 @@
 var WebGame = {};
 
-WebGame.Boot = function(game) {
+WebGame.Boot = function (game) {
 
 };
 
 WebGame.Boot.prototype = {
-  preload: function() {
+  preload: function () {
     this.load.image('preloaderBar', 'images/loading.png');
   },
 
-  create: function() {
+  create: function () {
     this.input.maxPointers = 1;
     this.stage.disableVisibilityChange = false;
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;

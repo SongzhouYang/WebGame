@@ -9,8 +9,6 @@ WebGame.StartMenu.prototype = {
     this.startbackground.anchor.setTo(0.5);
     this.startbackground.inputEnabled = true;
     this.add.button(this.world.centerX - 50, this.world.centerY + 280, 'StartButton', this.startGame, this);
-
-
   },
 
   startGame: function (pointer) {

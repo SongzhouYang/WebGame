@@ -1,4 +1,4 @@
-WebGame.Game = function(game) {
+WebGame.Game = function (game) {
   this.map = null;
   this.layer = null;
   this.a = null;
@@ -11,11 +11,11 @@ WebGame.Game = function(game) {
 };
 
 WebGame.Game.prototype = {
-  preload: function() {
+  preload: function () {
 
   },
 
-  create: function() {
+  create: function () {
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.world.enableBody = true;
 
@@ -25,19 +25,19 @@ WebGame.Game.prototype = {
     this.createMap();
     this.createEnemies();
 
-    this.camera.focusOnXY(7*64, this.world.centerY / 2);
+    this.camera.focusOnXY(7 * 64, this.world.centerY / 2);
     // this.a = this.add.image(this.world.centerX, this.world.centerY, 'atlasss', 1);
     // this.a.anchor.setTo(0.5);
   },
 
-  createEnemies: function() {
+  createEnemies: function () {
     this.enemy = this.add.sprite(43.5 * 70, 4 * 70, 'enemy');
     this.enemy.anchor.setTo(0.5, 1);
     this.enemy.scale.setTo(1.5);
     this.enemy.body.immovable = true;
   },
 
-  createMap: function() {
+  createMap: function () {
     this.map = this.add.tilemap('gamemap');
     this.map.addTilesetImage('tiles_spritesheet', 'tiles_spritesheet');
     this.map.setCollisionBetween(50, 90);
@@ -51,20 +51,20 @@ WebGame.Game.prototype = {
     this.map.setTileIndexCallback(81, this.resetGame, this);
   },
 
-  createMusic: function() {
+  createMusic: function () {
     this.music = this.add.audio('music');
     this.music.play();
   },
 
-  createScore: function() {
-    var style = { font: "32px Arial", fill: "#FFFFFF, wordWrap: true" };
+  createScore: function () {
+    var style = {font: "32px Arial", fill: "#FFFFFF, wordWrap: true"};
 
     this.text = this.add.text(100, 100, "Score", style);
     this.physics.arcade.enable(this.text);
     this.text.FixedToCamera = true;
   },
 
-  createPlayer: function() {
+  createPlayer: function () {
     this.player = this.add.sprite(2 * 64, this.world.centerY / 2, 'player');
     this.player.animations.add('walk', [6, 7, 8, 9, 10], 5, true);
     this.player.animations.add('jump', [15], 5, true);
@@ -73,19 +73,19 @@ WebGame.Game.prototype = {
     this.player.body.velocity.x = 580;
     this.player.body.collideWorldBounds = true;
     var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spaceKey.onDown.add(function() {
+    spaceKey.onDown.add(function () {
       this.spacePressed = true;
     }, this);
-    spaceKey.onUp.add(function() {
+    spaceKey.onUp.add(function () {
       this.spacePressed = false;
     }, this);
   },
 
-  jump: function() {
+  jump: function () {
     if (this.player.body.velocity.y === 0) this.player.body.velocity.y = -800;
   },
 
-  update: function() {
+  update: function () {
     this.camera.focusOnXY(this.player.x + 4 * 64, this.player.y);
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemy, this.resetGame, null, this);
@@ -98,8 +98,9 @@ WebGame.Game.prototype = {
     if (this.player.body.velocity.x === 0) this.resetGame();
   },
 
-  resetGame: function() {
+  resetGame: function () {
     this.music.stop();
-    this.state.start('Game');
+    // this.state.start('Game');
+    this.state.start('GameOver');
   }
 };
