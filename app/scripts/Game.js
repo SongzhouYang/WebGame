@@ -35,7 +35,6 @@ WebGame.Game.prototype = {
     this.createCoins();
     this.createPlayer();
 
-    this.camera.focusOnXY(7 * 64, this.world.centerY / 2);
     // this.a = this.add.image(this.world.centerX, this.world.centerY, 'atlasss', 1);
     // this.a.anchor.setTo(0.5);
   },
@@ -118,7 +117,11 @@ WebGame.Game.prototype = {
   },
 
   update: function () {
-    this.camera.focusOnXY(this.player.x + 3 * 64, this.player.y);
+    if (this.isOver) {
+      this.camera.follow(this.player, undefined, 0.01, 0.01);
+    } else {
+      this.camera.focusOnXY(this.player.x + 3 * 64, this.player.y);
+    }
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemy, this.lose, null, this);
     this.physics.arcade.overlap(this.player, this.coins, this.getCoin, null, this);
