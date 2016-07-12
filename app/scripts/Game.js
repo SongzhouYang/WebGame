@@ -77,7 +77,7 @@ WebGame.Game.prototype = {
     this.music.play();
     this.coinSound = this.add.audio('getCoin');
     this.winSound = this.add.audio('win');
-    this.loseSound = this.add.audio('lose');
+    this.loseSound = this.add.audio('die');
   },
 
   createScore: function () {
