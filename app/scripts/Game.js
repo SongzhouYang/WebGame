@@ -5,8 +5,7 @@ WebGame.Game = function (game) {
   this.layer = null;
   this.spacePressed = false;
   this.music = null;
-  this.enemies = null;
-  this.enemy = null;
+  this.enemies = [];
   this.player = null;
   this.emitter = null;
   this.coinSound = null;
@@ -14,6 +13,7 @@ WebGame.Game = function (game) {
   this.coins = [];
   this.isOver = false;
   this.coinSets = [[120, 9], [114, 9], [27, 14], [33, 13], [57, 13], [58, 13], [59, 13], [60, 13], [46, 11], [47, 11], [48, 11], [139, 11], [156, 9]];
+  this.enemySets = [[33, 11, 0], [64, 13, 2], [140, 13, 1], [167, 12, 0], [173, 15, 1], [18, 16, 1]];
 };
 
 WebGame.Game.prototype = {
@@ -22,6 +22,7 @@ WebGame.Game.prototype = {
     if (this.loseSound) this.loseSound.stop();
     this.isOver = false;
     this.spacePressed = false;
+    this.enemies = [];
   },
 
   create: function () {
@@ -55,10 +56,24 @@ WebGame.Game.prototype = {
   },
 
   createEnemies: function () {
-    this.enemy = this.add.sprite(43.5 * 70, 4 * 70, 'enemy');
-    this.enemy.anchor.setTo(0.5, 1);
-    this.enemy.scale.setTo(1.5);
-    this.enemy.body.immovable = true;
+    for (var i = 0, l = this.enemySets.length; i < l; i++) {
+      this.addEnemy(this.enemySets[i][0], this.enemySets[i][1], this.enemySets[i][2]);
+    }
+  },
+
+  addEnemy: function (x, y, type) {
+    var e;
+    if (type === 0) {
+      e = this.add.sprite(x * 70 + 10, y * 70, 'fly');
+      e.animations.add('flying', [0, 1], 5, true);
+      e.body.immovable = true;
+      this.enemies.push(e);
+    } else {
+      e = this.add.sprite(x * 70 + 10, y * 70 + 26, type == 1 ? 'slime' : 'snail');
+      e.body.immovable = true;
+      e.scale.setTo(1.5);
+      this.enemies.push(e);
+    }
   },
 
   createMap: function () {
@@ -135,7 +150,7 @@ WebGame.Game.prototype = {
       this.camera.focusOnXY(this.player.x + 5 * 70, this.player.y);
     }
     this.physics.arcade.collide(this.player, this.layer);
-    this.physics.arcade.overlap(this.player, this.enemy, this.lose, null, this);
+    this.physics.arcade.overlap(this.player, this.enemies, this.lose, null, this);
     this.physics.arcade.overlap(this.player, this.coins, this.getCoin, null, this);
 
     if (this.spacePressed === true) this.jump();
@@ -150,6 +165,12 @@ WebGame.Game.prototype = {
       this.player.animations.play('walk', 10, false, false);
     } else {
       this.player.animations.play('jump', 10, false, false);
+    }
+
+    for (var i = 0, l = this.enemySets.length; i < l; i++) {
+      if (this.enemySets[i][2] === 0) {
+        this.enemies[i].animations.play('flying', 5, false, false);
+      }
     }
 
     if (!this.isOver) {

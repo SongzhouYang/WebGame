@@ -16,6 +16,7 @@ WebGame.Preloader.prototype = {
     this.load.image('menu', 'images/menu.png');
     this.load.image('StartButton', 'images/StartButton.png');
     this.load.spritesheet('player', 'images/p1_spritesheet.png', 73, 96, -1, 0, 0);
+    this.load.spritesheet('fly', 'images/fly.png', 72, 36, -1, 0, 0);
     this.load.tilemap('gamemap', 'images/gamemap.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles_spritesheet', 'images/tileset/tiles_spritesheet.png');
     // this.load.audio('music', 'images/BaseAfterBase.mp3');
@@ -26,7 +27,8 @@ WebGame.Preloader.prototype = {
     this.load.audio('key', 'sound/key.ogg');
     this.load.audio('menu', 'sound/menu.mp3');
     this.load.audio('die', 'sound/die.ogg');
-    this.load.image('enemy', 'images/slimeWalk1.png');
+    this.load.image('slime', 'images/slime.png');
+    this.load.image('snail', 'images/snail.png');
     this.load.image('gameOver', 'images/gameover.png');
     this.load.image('tryAgain', 'images/tryagain.png');
     this.load.image('yes', 'images/yes.png');
