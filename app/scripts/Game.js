@@ -1,12 +1,10 @@
-'use strict';
+// 'use strict';
 
 WebGame.Game = function (game) {
   this.map = null;
   this.layer = null;
-  this.a = null;
   this.spacePressed = false;
   this.music = null;
-  this.text = null;
   this.enemies = null;
   this.enemy = null;
   this.player = null;
@@ -15,6 +13,7 @@ WebGame.Game = function (game) {
   this.winSound = null;
   this.coins = [];
   this.isOver = false;
+  this.coinSets = [[120, 9], [114, 9], [27, 14], [33, 13], [57, 13], [58, 13], [59, 13], [60, 13], [46, 11], [47, 11], [48, 11], [139, 11], [156, 9]];
 };
 
 WebGame.Game.prototype = {
@@ -30,15 +29,11 @@ WebGame.Game.prototype = {
     this.world.enableBody = true;
 
     this.createMap();
-    this.createScore();
     this.createEnemies();
     this.createCoins();
     this.createPlayer();
     this.createEmitter();
     this.createMusic();
-
-    // this.a = this.add.image(this.world.centerX, this.world.centerY, 'atlasss', 1);
-    // this.a.anchor.setTo(0.5);
   },
 
   createEmitter: function () {
@@ -50,7 +45,13 @@ WebGame.Game.prototype = {
   },
 
   createCoins: function () {
-    this.coins.push(this.add.sprite(28 * 70 + 10, 6 * 70, 'coin'));
+    for (var i = 0, l = this.coinSets.length; i < l; i++) {
+      this.addCoin(this.coinSets[i][0], this.coinSets[i][1]);
+    }
+  },
+
+  addCoin: function (x, y) {
+     this.coins.push(this.add.sprite(x * 70 + 10, y * 70, 'coin'));
   },
 
   createEnemies: function () {
@@ -99,14 +100,6 @@ WebGame.Game.prototype = {
     this.loseSound = this.add.audio('die');
   },
 
-  createScore: function () {
-    var style = {font: '32px Arial', fill: '#FFFFFF, wordWrap: true'};
-
-    this.text = this.add.text(100, 100, 'Score', style);
-    this.physics.arcade.enable(this.text);
-    this.text.FixedToCamera = true;
-  },
-
   createPlayer: function () {
     this.player = this.add.sprite(2 * 64, this.world.centerY * 3 / 4, 'player');
     this.player.animations.add('walk', [6, 7, 8, 9, 10], 5, true);
@@ -139,7 +132,7 @@ WebGame.Game.prototype = {
     if (this.isOver) {
       this.camera.follow(this.player, undefined, 0.01, 0.01);
     } else {
-      this.camera.focusOnXY(this.player.x + 3 * 64, this.player.y);
+      this.camera.focusOnXY(this.player.x + 5 * 70, this.player.y);
     }
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemy, this.lose, null, this);
@@ -167,7 +160,6 @@ WebGame.Game.prototype = {
     } else {
       this.emitter.on = false;
     }
-    // this.physics.arcade.overlap(this.player, this.coins, this.getCoin, null, this);
   },
 
   lose: function () {
