@@ -19,7 +19,7 @@ WebGame.Preloader.prototype = {
     this.load.spritesheet('fly', 'images/fly.png', 72, 36, -1, 0, 0);
     this.load.tilemap('gamemap', 'images/gamemap.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles_spritesheet', 'images/tileset/tiles_spritesheet.png');
-    // this.load.audio('music', 'images/BaseAfterBase.mp3');
+    this.load.image('bg', 'images/bg.png');
     this.load.audio('getCoin', 'sound/getCoin.ogg');
     this.load.audio('win', 'sound/win.ogg');
     this.load.audio('lose', 'sound/lose.mp3');

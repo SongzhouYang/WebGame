@@ -11,6 +11,7 @@ WebGame.Game = function (game) {
   this.coinSound = null;
   this.winSound = null;
   this.coins = [];
+  this.bg = null;
   this.isOver = false;
   this.coinSets = [[120, 9], [114, 9], [27, 14], [33, 13], [57, 13], [58, 13], [59, 13], [60, 13], [46, 11], [47, 11], [48, 11], [139, 11], [156, 9]];
   this.enemySets = [[33, 11, 0], [64, 13, 2], [140, 13, 1], [167, 12, 0], [173, 15, 1], [18, 16, 1], [156, 11, 0], [138, 8, 0], [102, 6, 0]];
@@ -29,12 +30,17 @@ WebGame.Game.prototype = {
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.world.enableBody = true;
 
+    this.createBackground();
     this.createMap();
     this.createEnemies();
     this.createCoins();
     this.createPlayer();
     this.createEmitter();
     this.createMusic();
+  },
+
+  createBackground: function () {
+    this.bg = this.add.tileSprite(-500, 0, 5067, 20 * 70, 'bg');
   },
 
   createEmitter: function () {
@@ -148,6 +154,8 @@ WebGame.Game.prototype = {
       this.camera.follow(this.player, undefined, 0.01, 0.01);
     } else {
       this.camera.focusOnXY(this.player.x + 5 * 70, this.player.y);
+      this.bg.position.x += 8;
+      this.bg.tilePosition.x -= 5;
     }
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemies, this.lose, null, this);
