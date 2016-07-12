@@ -27,10 +27,10 @@ WebGame.Game.prototype = {
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.world.enableBody = true;
 
+    this.createMap();
     this.createPlayer();
     this.createScore();
     this.createMusic();
-    this.createMap();
     this.createEnemies();
     this.createEmitter();
     this.createCoins();
@@ -116,27 +116,31 @@ WebGame.Game.prototype = {
   },
 
   update: function () {
-    this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
-    this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
-    this.emitter.emitX = this.player.x;
-    this.emitter.emitY = this.player.y + 50;
-
     this.camera.focusOnXY(this.player.x + 3 * 64, this.player.y);
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemy, this.lose, null, this);
     this.physics.arcade.overlap(this.player, this.coins, this.getCoin, null, this);
 
     if (this.spacePressed === true) this.jump();
-    if (this.player.body.velocity.y === 0) {
+
+    if (this.player.body.velocity.x === 0) this.lose();
+
+    if (this.player.body.velocity.x == -0.1) {
+      this.player.animations.play('die', 10, false, false);
+    } else if (this.player.body.velocity.y === 0) {
       this.player.animations.play('walk', 10, false, false);
     } else {
       this.player.animations.play('jump', 10, false, false);
     }
-    if (this.player.body.velocity.x === 0) this.lose();
-    this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
-    this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
-    this.emitter.emitX = this.player.x;
-    this.emitter.emitY = this.player.y + 50;
+
+    if (!this.isOver) {
+      this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+      this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+      this.emitter.emitX = this.player.x;
+      this.emitter.emitY = this.player.y + 50;
+    } else {
+      this.emitter.on = false;
+    }
     // this.physics.arcade.overlap(this.player, this.coins, this.getCoin, null, this);
   },
 
@@ -146,7 +150,7 @@ WebGame.Game.prototype = {
       this.music.stop();
       this.loseSound.play(undefined, false, true);
       this.player.body.velocity.x = -0.1;
-      this.state.start('GameOver');
+      this.time.events.add(Phaser.Timer.SECOND * 1.5, this.gameOver, this);
     }
   },
 
@@ -158,5 +162,9 @@ WebGame.Game.prototype = {
       this.isOver = true;
       this.state.start('GameOver');
     }
+  },
+
+  gameOver: function () {
+    this.state.start('GameOver');
   }
 };
