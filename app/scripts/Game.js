@@ -93,6 +93,7 @@ WebGame.Game.prototype = {
     this.player.animations.add('walk', [6, 7, 8, 9, 10], 5, true);
     this.player.animations.add('jump', [15], 5, true);
     this.player.animations.add('die', [14], 5, true);
+    this.player.animations.add('stand', [12], 5, true);
     this.physics.arcade.enable(this.player);
     this.player.body.gravity.y = 2100;
     this.player.body.velocity.x = 580;
@@ -127,6 +128,8 @@ WebGame.Game.prototype = {
 
     if (this.player.body.velocity.x == -0.1) {
       this.player.animations.play('die', 10, false, false);
+    } else if (this.player.body.velocity.x == -0.2) {
+      this.player.animations.play('stand', 10, false, false);
     } else if (this.player.body.velocity.y === 0) {
       this.player.animations.play('walk', 10, false, false);
     } else {
@@ -158,13 +161,17 @@ WebGame.Game.prototype = {
     if (this.isOver === false) {
       this.music.stop();
       this.winSound.play();
-      this.player.body.velocity.x = -0.1;
+      this.player.body.velocity.x = -0.2;
       this.isOver = true;
-      this.state.start('GameOver');
+      this.time.events.add(Phaser.Timer.SECOND * 1.5, this.gameOver, this);
     }
   },
 
   gameOver: function () {
     this.state.start('GameOver');
+  },
+
+  stageClear: function () {
+    this.state.start('Gameover');
   }
 };
