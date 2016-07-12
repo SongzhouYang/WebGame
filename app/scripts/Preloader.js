@@ -32,6 +32,8 @@ WebGame.Preloader.prototype = {
 
   create: function () {
     this.preloaderBar.cropEnabled = false;
+    var style = {font: '32px Arial', fill: '#FFFFFF, wordWrap: true'};
+    this.text = this.add.text(this.world.centerX, this.world.centerY - 100, 'Loading', style);
   },
 
   update: function () {

@@ -28,12 +28,13 @@ WebGame.Game.prototype = {
     this.world.enableBody = true;
 
     this.createMap();
-    this.createPlayer();
     this.createScore();
     this.createMusic();
     this.createEnemies();
     this.createEmitter();
     this.createCoins();
+    this.createPlayer();
+
     this.camera.focusOnXY(7 * 64, this.world.centerY / 2);
     // this.a = this.add.image(this.world.centerX, this.world.centerY, 'atlasss', 1);
     // this.a.anchor.setTo(0.5);
