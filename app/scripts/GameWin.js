@@ -9,14 +9,14 @@ WebGame.GameWin = function (game) {
 
 WebGame.GameWin.prototype = {
   create: function () {
-    this.gameWin = this.add.image(this.world.centerX, this.world.centerY - 150, 'victory');
+    this.gameWin = this.add.image(this.world.centerX, this.world.centerY - 350, 'victory');
     this.gameWin.anchor.setTo(0.5);
     this.camera.follow(this.gameWin);
-    this.tryAgain = this.add.image(this.world.centerX, this.world.centerY + 50, 'continue');
+    this.tryAgain = this.add.image(this.world.centerX, this.world.centerY - 150, 'continue');
     this.tryAgain.anchor.setTo(0.5);
-    this.yes = this.add.button(this.world.centerX - 100, this.world.centerY + 170, 'yes', this.startGame, this);
+    this.yes = this.add.button(this.world.centerX - 100, this.world.centerY - 30, 'yes', this.startGame, this);
     this.yes.anchor.setTo(0.5);
-    this.no = this.add.button(this.world.centerX + 100, this.world.centerY + 170, 'no', this.backToMenu, this);
+    this.no = this.add.button(this.world.centerX + 100, this.world.centerY - 30, 'no', this.backToMenu, this);
     this.no.anchor.setTo(0.5);
     var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceKey.onDown.add(this.startGame, this);
