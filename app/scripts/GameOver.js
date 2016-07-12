@@ -1,3 +1,5 @@
+'use strict';
+
 WebGame.GameOver = function (game) {
   this.gameOver = null;
   this.tryAgain = null;

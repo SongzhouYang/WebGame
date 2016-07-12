@@ -1,3 +1,5 @@
+'use strict';
+
 WebGame.Preloader = function () {
   this.preloaderBar = null;
   this.ready = false;

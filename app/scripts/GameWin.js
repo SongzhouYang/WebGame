@@ -1,3 +1,5 @@
+'use strict';
+
 WebGame.GameWin = function (game) {
   this.gameWin = null;
   this.tryAgain = null;

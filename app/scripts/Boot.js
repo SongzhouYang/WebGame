@@ -1,3 +1,5 @@
+'use strict';
+
 var WebGame = {};
 
 WebGame.Boot = function (game) {

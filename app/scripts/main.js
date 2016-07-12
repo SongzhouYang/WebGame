@@ -1,4 +1,6 @@
-window.onload = function () {
+'use strict';
+
+$(function () {
   var game = new Phaser.Game(20 * 70, 12 * 70, Phaser.CANVAS, 'gameContainer');
 
   game.state.add('Boot', WebGame.Boot);
@@ -9,4 +11,4 @@ window.onload = function () {
   game.state.add('GameWin', WebGame.GameWin);
 
   game.state.start('Boot');
-};
+});

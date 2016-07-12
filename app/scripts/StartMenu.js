@@ -1,3 +1,5 @@
+'use strict';
+
 WebGame.StartMenu = function (game) {
   this.startbackground = null;
   this.startPrompt = null;
