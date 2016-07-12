@@ -22,6 +22,8 @@ WebGame.Preloader.prototype = {
     this.load.image('tryAgain', 'images/tryagain.png');
     this.load.image('yes', 'images/yes.png');
     this.load.image('no', 'images/no.png');
+    this.load.image('restart', 'images/restart.png');
+    this.load.image('coin', 'images/coin.png');
   },
 
   create: function () {
