@@ -1,6 +1,7 @@
 WebGame.Preloader = function() {
   this.preloaderBar = null;
   this.ready = false;
+  this.levelone = null;
 };
 
 WebGame.Preloader.prototype = {
@@ -10,8 +11,12 @@ WebGame.Preloader.prototype = {
     this.load.setPreloadSprite(this.preloaderBar);
 
     // load everything for the game here
-    this.load.image('square', 'images/square.png');
+    this.load.image('square', 'images/bluesquare.png');
     this.load.image('menu', 'images/menu.png');
+
+    this.load.tilemap('gamemap', 'images/gamemap.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.image('tiles_spritesheet', 'images/tileset/tiles_spritesheet.png');
+    this.load.audio('music', 'images/BaseAfterBase.mp3');
   },
 
   create: function() {
@@ -21,5 +26,5 @@ WebGame.Preloader.prototype = {
   update: function() {
     this.ready = true;
     this.state.start('StartMenu');
-  }
+  },
 };
