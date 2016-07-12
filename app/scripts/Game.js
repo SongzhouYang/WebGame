@@ -100,7 +100,6 @@ WebGame.Game.prototype = {
 
   resetGame: function () {
     this.music.stop();
-    // this.state.start('Game');
     this.state.start('GameOver');
   }
 };
