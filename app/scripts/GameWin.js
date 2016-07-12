@@ -18,6 +18,8 @@ WebGame.GameWin.prototype = {
     this.yes.anchor.setTo(0.5);
     this.no = this.add.button(this.world.centerX + 100, this.world.centerY + 170, 'no', this.backToMenu, this);
     this.no.anchor.setTo(0.5);
+    var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.add(this.startGame, this);
   },
 
   startGame: function () {

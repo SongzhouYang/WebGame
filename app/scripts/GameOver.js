@@ -21,6 +21,8 @@ WebGame.GameOver.prototype = {
     this.no.anchor.setTo(0.5);
     this.music = this.add.audio('lose');
     this.music.play();
+    var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.add(this.startGame, this);
   },
 
   startGame: function () {

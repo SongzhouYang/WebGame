@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 
 WebGame.Game = function (game) {
   this.map = null;
