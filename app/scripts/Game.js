@@ -12,11 +12,14 @@ WebGame.Game = function (game) {
   this.coinSound = null;
   this.winSound = null;
   this.coins = [];
+  this.isOver = false;
 };
 
 WebGame.Game.prototype = {
   preload: function () {
     this.coins = [];
+    if (this.loseSound) this.loseSound.stop();
+    this.isOver = false;
     this.spacePressed = false;
   },
 
@@ -64,7 +67,7 @@ WebGame.Game.prototype = {
     this.layer.resizeWorld();
     this.physics.arcade.enable(this.layer);
 
-    // this.map.setTileIndexCallback(43, this.resetGame, this);
+    // this.map.setTileIndexCallback(43, this.lose, this);
     this.map.setTileIndexCallback(70, this.win, this);
     this.map.setTileIndexCallback(82, this.win, this);
   },
@@ -74,9 +77,7 @@ WebGame.Game.prototype = {
     this.music.play();
     this.coinSound = this.add.audio('getCoin');
     this.winSound = this.add.audio('win');
-    this.winSound.onMute.add(function() {
-      this.state.start('StartMenu');
-    });
+    this.loseSound = this.add.audio('lose');
   },
 
   createScore: function () {
@@ -91,6 +92,7 @@ WebGame.Game.prototype = {
     this.player = this.add.sprite(2 * 64, this.world.centerY / 2, 'player');
     this.player.animations.add('walk', [6, 7, 8, 9, 10], 5, true);
     this.player.animations.add('jump', [15], 5, true);
+    this.player.animations.add('die', [14], 5, true);
     this.physics.arcade.enable(this.player);
     this.player.body.gravity.y = 2100;
     this.player.body.velocity.x = 580;
@@ -121,7 +123,7 @@ WebGame.Game.prototype = {
 
     this.camera.focusOnXY(this.player.x + 3 * 64, this.player.y);
     this.physics.arcade.collide(this.player, this.layer);
-    this.physics.arcade.overlap(this.player, this.enemy, this.resetGame, null, this);
+    this.physics.arcade.overlap(this.player, this.enemy, this.lose, null, this);
     this.physics.arcade.overlap(this.player, this.coins, this.getCoin, null, this);
 
     if (this.spacePressed === true) this.jump();
@@ -130,7 +132,7 @@ WebGame.Game.prototype = {
     } else {
       this.player.animations.play('jump', 10, false, false);
     }
-    if (this.player.body.velocity.x === 0) this.resetGame();
+    if (this.player.body.velocity.x === 0) this.lose();
     this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
     this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
     this.emitter.emitX = this.player.x;
@@ -138,14 +140,23 @@ WebGame.Game.prototype = {
     // this.physics.arcade.overlap(this.player, this.coins, this.getCoin, null, this);
   },
 
-  resetGame: function () {
-    this.music.stop();
-    this.state.start('GameOver');
+  lose: function () {
+    if (this.isOver === false) {
+      this.isOver = true;
+      this.music.stop();
+      this.loseSound.play(undefined, false, true);
+      this.player.body.velocity.x = -0.1;
+      this.state.start('GameOver');
+    }
   },
 
   win: function () {
-    this.music.stop();
-    this.winSound.play();
-    this.player.body.velocity.x = 0;
+    if (this.isOver === false) {
+      this.music.stop();
+      this.winSound.play();
+      this.player.body.velocity.x = -0.1;
+      this.isOver = true;
+      this.state.start('GameOver');
+    }
   }
 };
