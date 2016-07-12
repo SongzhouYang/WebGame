@@ -11,9 +11,9 @@ WebGame.Preloader.prototype = {
     this.load.setPreloadSprite(this.preloaderBar);
 
     // load everything for the game here
-    this.load.image('square', 'images/bluesquare.png');
     this.load.image('menu', 'images/menu.png');
     this.load.image('StartButton', 'images/StartButton.png');
+    this.load.spritesheet('player', 'images/p1_spritesheet.png', 73, 96, -1, 0, 0);
     this.load.tilemap('gamemap', 'images/gamemap.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles_spritesheet', 'images/tileset/tiles_spritesheet.png');
     this.load.audio('music', 'images/BaseAfterBase.mp3');
