@@ -1,12 +1,16 @@
 (function () {
   'use strict';
 
-  var chai = require('chai');
-  describe('Give it some context', function () {
-    describe('maybe a bit more context here', function () {
-      it('should run here few assertions', function () {
-
-      });
+  describe('check Phaser', function () {
+    it('fail only when Phaser framework do not exist', function () {
+      Phaser.should.be.a('object');
     });
   });
+
+  describe('check Physics', function () {
+    it('pass if physics engine function well', function () {
+      Phaser.Physics.should.be.a('function');
+    });
+  });
+  
 })();
