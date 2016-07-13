@@ -140,11 +140,11 @@
     it('test WebGame.GameWin.prototype.create', function () {
       WebGame.GameWin.prototype.create.should.be.a('function');
     });
-    it('test WebGame.GameWin.prototype.startGame', function () {
-      WebGame.GameWin.prototype.startGame.should.be.a('function');
+    it('test WebGame.GameWin.prototype.restartGame', function () {
+      WebGame.GameWin.prototype.restartGame.should.be.a('function');
     });
-    it('test WebGame.GameWin.prototype.backToMenu', function () {
-      WebGame.GameWin.prototype.backToMenu.should.be.a('function');
+    it('test WebGame.GameWin.prototype.endGame', function () {
+      WebGame.GameWin.prototype.endGame.should.be.a('function');
     });
   });
 })();

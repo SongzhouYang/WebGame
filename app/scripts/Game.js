@@ -58,7 +58,7 @@ WebGame.Game.prototype = {
   },
 
   addCoin: function (x, y) {
-     this.coins.push(this.add.sprite(x * 70 + 10, y * 70, 'coin'));
+    this.coins.push(this.add.sprite(x * 70 + 10, y * 70, 'coin'));
   },
 
   createEnemies: function () {
@@ -152,10 +152,17 @@ WebGame.Game.prototype = {
   update: function () {
     if (this.isOver) {
       this.camera.follow(this.player, undefined, 0.01, 0.01);
+
+      this.emitter.on = false;
     } else {
       this.camera.focusOnXY(this.player.x + 5 * 70, this.player.y);
       this.bg.position.x += 8;
       this.bg.tilePosition.x -= 5;
+
+      this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+      this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
+      this.emitter.emitX = this.player.x;
+      this.emitter.emitY = this.player.y + 50;
     }
     this.physics.arcade.collide(this.player, this.layer);
     this.physics.arcade.overlap(this.player, this.enemies, this.lose, null, this);
@@ -179,15 +186,6 @@ WebGame.Game.prototype = {
       if (this.enemySets[i][2] === 0) {
         this.enemies[i].animations.play('flying', 5, false, false);
       }
-    }
-
-    if (!this.isOver) {
-      this.emitter.minParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
-      this.emitter.maxParticleSpeed.set(-this.player.body.velocity.x, -this.player.body.velocity.y);
-      this.emitter.emitX = this.player.x;
-      this.emitter.emitY = this.player.y + 50;
-    } else {
-      this.emitter.on = false;
     }
   },
 
