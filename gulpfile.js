@@ -134,7 +134,7 @@ gulp.task('serve:dist', () => {
 gulp.task('serve:test', ['scripts'], () => {
   browserSync({
     notify: false,
-    port: 9000,
+    port: 9001,
     ui: false,
     server: {
       baseDir: 'test',

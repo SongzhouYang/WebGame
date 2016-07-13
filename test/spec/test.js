@@ -13,6 +13,12 @@
     });
   });
 
+  describe('check jQuery', function () {
+    it('pass if jQuery exist', function () {
+      jQuery.should.be.a('function');
+    });
+  });
+
   describe('check WebGame', function () {
     it('test WebGame', function () {
       WebGame.should.be.a('object');
