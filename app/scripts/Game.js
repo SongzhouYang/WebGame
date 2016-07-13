@@ -75,7 +75,7 @@ WebGame.Game.prototype = {
       e.body.immovable = true;
       this.enemies.push(e);
     } else {
-      e = this.add.sprite(x * 70 + 10, y * 70 + 26, type == 1 ? 'slime' : 'snail');
+      e = this.add.sprite(x * 70 + 10, y * 70 + 26, type === 1 ? 'slime' : 'snail');
       e.body.immovable = true;
       e.scale.setTo(1.5);
       this.enemies.push(e);
@@ -165,9 +165,9 @@ WebGame.Game.prototype = {
 
     if (this.player.body.velocity.x === 0) this.lose();
 
-    if (this.player.body.velocity.x == -0.1) {
+    if (this.player.body.velocity.x === -0.1) {
       this.player.animations.play('die', 10, false, false);
-    } else if (this.player.body.velocity.x == -0.2) {
+    } else if (this.player.body.velocity.x === -0.2) {
       this.player.animations.play('stand', 10, false, false);
     } else if (this.player.body.velocity.y === 0) {
       this.player.animations.play('walk', 10, false, false);
